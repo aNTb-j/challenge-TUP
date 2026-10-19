@@ -2,11 +2,12 @@ import Transactions from "../database/models/transactions.js";
 
 
 // GET
-export const getTransactionData = async (req, res) => {
-	const transactionId = req.params.id;
-	const transaction = await Transactions.findByPk(transactionId);
+
+export const getAllTransactionData = async (req, res) => {
+	const transaction = await Transactions.findAll();
 	res.json(transaction);
 };
+
 
 // POST
 export const creatTransaction = async (req, res) => {

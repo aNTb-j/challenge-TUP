@@ -1,10 +1,10 @@
 import { Router } from "express"; 
 
-import { getTransactionData, creatTransaction } from "../service/transaction.service.js";
+import { getAllTransactionData, creatTransaction } from "../service/transaction.service.js";
 
 const router = Router();
 
-router.get("/transactions", getTransactionData)
+router.get("/transactions", getAllTransactionData)
 
 router.post("/transactions", creatTransaction)
 

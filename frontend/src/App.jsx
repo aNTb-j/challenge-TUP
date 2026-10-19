@@ -7,6 +7,8 @@ export const App = () => {
 
 	const [transactions, setTransactions] = useState([]);
 
+	const [seeTransactions, setSeeTransactions] = useState(false);
+
 	const [error, setError] = useState('');
 
 	const handleAmount = (e) => {
@@ -16,6 +18,33 @@ export const App = () => {
 	const handleDescription = (e) => {
 		setDescription(e.target.value);
 	};
+
+	const handleAllTransactions = async (e) => {
+		e.preventDefault();
+		const toggle = seeTransactions === true ? false : true
+		setSeeTransactions(toggle)
+
+		try {
+
+			const response = await fetch(
+				"http://localhost:3000/transactions",
+				{
+					method: "GET",
+
+				}
+			);
+
+			if (!response.ok) {
+				throw new Error("No se pudo obtener las transacciónes");
+			}
+
+			await response.json();
+
+		} catch (error) {
+			setError(error.message);
+		}
+	};
+
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -104,11 +133,18 @@ export const App = () => {
 				</Button>
 			</Form>
 			<>
+			<p>________________________________________________________</p>
+			</>
+			<Button onClick={handleAllTransactions} type='button'>
+				<p>{seeTransactions == true ? "Ocultar" : "Ver"} </p>
+			</Button>
+			
+			<div>
 
-				<section>
+				<section >
 					{error && <p>{error}</p>}
 
-					{transactions.length > 0 ? (
+					{transactions.length > 0 && seeTransactions == true ? (
 						transactions.map(transaction => (
 							<div key={transaction.id}>
 								<p>Monto: {transaction.amount}</p>
@@ -116,9 +152,12 @@ export const App = () => {
 							</div>
 						))
 					) : (
-						<p>No hay transacciones</p>
+						<p></p>
 					)}
 				</section>
+			</div>
+			<>
+
 			</>
 		</div>
 	)
