@@ -67,6 +67,7 @@ export const App = () => {
 			);
 
 			if (!response.ok) {
+				alert('Error cargando la transaccion')
 				throw new Error("No se pudo guardar la transacción");
 			}
 
@@ -76,6 +77,7 @@ export const App = () => {
 
 			setAmount('');
 			setDescription('');
+			alert('Transaccion cargada con exito')
 		} catch (error) {
 			setError(error.message);
 		}

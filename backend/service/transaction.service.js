@@ -13,8 +13,8 @@ export const getAllTransactionData = async (req, res) => {
 export const creatTransaction = async (req, res) => {
 	const { amount, description } = req.body;
 
-	if (amount < 0) {
-		return res.status(400).json({ message: "El amount no puede ser menor a 0" })
+	if (amount < 0 || !description?.trim()) {
+		return res.status(400).json({ message: "El amount debe ser mayor a 0 y description deben estar completo" })
 	}
 
 	const transaccion = await Transactions.create({
